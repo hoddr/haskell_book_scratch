@@ -100,3 +100,67 @@ zip'' = zipWith' (\x y -> (x, y))
 -- 2.
 filterUppers :: String -> String
 filterUppers = filter isUpper
+-- 3.
+capFirst :: String -> String
+capFirst [] = ""
+capFirst (s:ss) = toUpper s : ss
+-- 4.
+capAll :: String -> String
+capAll [] = ""
+capAll (s:ss) = toUpper s : capAll ss
+-- 5.
+capFirst' :: String -> Char
+capFirst' "" = ' '
+capFirst' s = toUpper $ head s
+-- 6.
+capFirst'' :: String -> Char
+capFirst'' "" = ' '
+capFirst'' s = (toUpper . head) s
+-- capFirst''' = toUpper . head
+
+-- 1. myOr
+myOr :: [Bool] -> Bool
+myOr [] = True
+myOr (b:bs) = b || myOr bs
+
+-- 2. myAny
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny _ [] = True
+myAny f (x:xs) = f x || myAny f xs
+
+-- 3. myElem
+myElem :: Eq a => a -> [a] -> Bool
+myElem _ [] = False
+myElem test (x:xs) = test == x || myElem test xs
+
+-- 4. myElem w/ any
+myElem' :: Eq a => a -> [a] -> Bool
+myElem' _ [] = False
+myElem' test xs = any ((==) test) xs
+
+-- 5. myReverse
+myReverse :: [a] -> [a]
+myReverse [] = []
+myReverse (x:xs) = x : myReverse xs
+
+-- 6. squish
+squish :: [[a]] -> [a]
+squish [] = []
+squish (x:xs) = unpack x ++ squish xs
+  where unpack [] = []
+        unpack (y:ys) = y : unpack ys
+
+-- 7. squishMap
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap _ [] = []
+squishMap f (x:xs) = f x ++ squishMap f xs
+
+-- 8. squishAgain :: [[a]] -> [a]
+squishAgain :: [[a]] -> [a]
+squishAgain [] = []
+squishAgain xs = squishMap unpack xs
+  where unpack [] = []
+        unpack (y:ys) = y : unpack ys
+
+-- 9. myMaximumBy (pain in the but)
+-- 10. same
