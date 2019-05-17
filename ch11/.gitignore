@@ -1,0 +1,7 @@
+*~
+dist/
+ChangeLog.md
+LICENSE
+stack.yaml
+.cabal-sandbox
+dist-newstyle/
