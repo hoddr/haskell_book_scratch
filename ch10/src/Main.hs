@@ -76,3 +76,71 @@ factorial :: [Integer]
 factorial = scanl (*) 1 [1..]
 
 -- ch 10 exercises
+-- 1
+stopVowelStop :: String -> String -> [(Char, Char, Char)]
+stopVowelStop stops vowels = [(x, y, z) | x <- stops, y <- vowels, z <- stops]
+
+startWithP :: String -> String -> [(Char, Char, Char)]
+startWithP stops vowels = filter (\(x, _, _) -> x == 'p') $ stopVowelStop stops vowels
+
+nounVerbNoun :: [String] -> [String] -> [(String, String, String)]
+nounVerbNoun nouns verbs = [(x, y, z) | x <- nouns, y <- verbs, z <- nouns]
+
+-- ch10
+-- 2
+-- returns avg word length in string
+-- seekritFunc :: String -> Integer
+seekritFunc x =
+  div (sum (map length (words x)))
+      (length (words x))
+
+seekritFunc' x =
+  (/) (fromIntegral $ sum (map length (words x)))
+      (fromIntegral $ length (words x))
+
+-- fold re-writes
+myOr :: [Bool] -> Bool
+myOr = foldr (\b acc -> acc || b) False
+
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny pred = foldr (\b acc -> (pred b) || acc) False
+
+-- 3 2 versions of myElem
+myElem :: Eq a => a -> [a] -> Bool
+myElem x = foldr (\b acc -> b == x || acc) False
+
+-- using any
+myElem' :: Eq a => a -> [a] -> Bool
+myElem' x = any (\b -> b == x)
+
+-- 4
+myReverse :: [a] -> [a]
+myReverse = foldl (flip (:)) []
+
+-- 5
+myMap :: (a -> b) -> [a] -> [b]
+myMap f = foldr (\next acc -> f next : acc) []
+
+-- 6
+myFilter :: (a -> Bool) -> [a] -> [a]
+myFilter pred = foldr (\b acc -> if pred b then b : acc else acc) []
+
+-- 7
+squish :: [[a]] -> [a]
+squish = foldr (\x acc -> x ++ acc) []
+
+-- 8
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap f = foldr (\x acc -> f x ++ acc) []
+
+-- 9
+squishAgain :: [[a]] -> [a]
+squishAgain = squishMap id
+
+-- 10
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy comp (x:xs) = foldr (\x acc -> if comp x acc == GT then x else acc) x xs
+
+-- 11
+myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy comp (x:xs) = foldr (\x acc -> if comp x acc == LT then x else acc) x xs
