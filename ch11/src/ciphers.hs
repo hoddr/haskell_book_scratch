@@ -23,7 +23,7 @@ uncaesar n = map (decrypt n)
           | isAlpha c && isUpper c = chr $ ((mod ((ord c) - n - (ord 'A'))) 26) + (ord 'A')
           | otherwise = c
 
-newtype Key -> String
+type Key = String
 
 -- meet at dawn
 -- ally al lyal

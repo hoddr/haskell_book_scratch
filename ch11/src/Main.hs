@@ -1,6 +1,8 @@
 module Main where
 
-import Data.List (sort)
+import Data.List (intercalate, sort)
+import Data.Char (toUpper)
+import Data.List.Split (splitOn)
 
 main :: IO ()
 main = undefined
@@ -323,3 +325,32 @@ foldTree f acc tree = foldr f acc $ preorder tree
 -- 4. c
 
 -- vigenere cipher (see ciphers.hs)
+--
+-- as-patterns
+-- 1.
+isSubSeqOf :: (Eq a) => [a] -> [a] -> Bool
+isSubSeqOf (s:[]) t = elem s t
+isSubSeqOf (s:ss) t = if elem s t
+                         then isSubSeqOf ss $ dropWhile (\c -> c /= s) t
+                         else False
+
+-- 2.
+capitalizeWords :: String -> [(String, String)]
+capitalizeWords = map capTuple . words
+  where capTuple :: String -> (String, String)
+        capTuple s@(x:xs) = (s, (toUpper x) : xs)
+
+-- language ex
+-- 1.
+capitalizeWord :: String -> String
+capitalizeWord (s:ss) = toUpper s : ss
+
+capitalizeSentence s = inner $ words s
+  where inner (w:ws) = capitalizeWord w : ws
+
+-- 2.
+-- capitalizeParagraph :: String -> String
+-- capitalizeParagraph s = intercalate "." $ map capitalizeSentence $ splitOn "." s
+--
+-- phone game (skipped)
+-- razor (skipped)
