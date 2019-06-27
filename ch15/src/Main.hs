@@ -320,10 +320,9 @@ testTrivialMonoid = do
 newtype Mem s a =
   Mem { runMem :: s -> (a, s) }
 
--- TODO case matching still?
 instance Semigroup a => Semigroup (Mem s a) where
   (<>) (Mem { runMem = f }) (Mem { runMem = g }) = Mem $
-    \s -> (((fst (f s)) <> (fst (g s))), s)
+    \s -> (((fst (f s)) <> (fst (g s))), (snd $ g (snd (f s))))
 
 instance (Semigroup a, Monoid a) => Monoid (Mem s a) where
   mempty = Mem $ \s -> (mempty, s)
