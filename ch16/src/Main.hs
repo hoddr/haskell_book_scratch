@@ -230,3 +230,29 @@ fourComp' x = functorCompose (+1) (*2) (x :: Four' Int Int)
 testFourComp' = quickCheck fourComp'
 
 -- 8. No. Has wrong kind of * and not * -> *
+
+-- ex possibly
+data Possibly a = LolNope
+                | Yeppers a
+                deriving (Eq, Show)
+
+instance Functor Possibly where
+  fmap _ LolNope = LolNope
+  fmap f (Yeppers a) = Yeppers (f a)
+
+-- short exercise
+data Su' a b = Firs' a
+             | Secon' b
+             deriving (Eq, Show)
+
+instance Functor (Su' a) where
+  fmap _ (Firs' x) = Firs' x
+  fmap f (Secon' b) = Secon' (f b)
+
+-- 2. type issues
+
+-- 16.17 chapter exercises
+-- 1. no
+-- 2. yes
+-- 3. yes
+-- 4. (so on, done for now)
