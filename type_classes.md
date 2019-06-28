@@ -41,6 +41,7 @@ instance Semigroup Foo where
 ```haskell
 class Functor f where
   fmap :: (a -> b) -> f a -> f b
+  (<$>)
 
 -- identity
 fmap id == id
@@ -68,4 +69,19 @@ functorCompose f g x =
 - laws
   - identity
   - composition
+
+## applicatives
+
+- monoidal functors
+-
+
+```haskell
+class Functor f => Applicative f where
+  pure :: a -> f a
+  -- also known as apply, or ap
+  (<*>) :: f (a -> b) -> f a -> f b
+
+-- Control.Applicative
+-- liftA, liftA2, liftA3
+```
 
