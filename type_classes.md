@@ -83,5 +83,23 @@ class Functor f => Applicative f where
 
 -- Control.Applicative
 -- liftA, liftA2, liftA3
+
+-- laws
+-- identity
+pure id <*> v = v
+
+-- composition
+-- apply then compose versus compose then apply
+pure (.) <*> u <*> v <*> w = u <*> (v <*> w)
+
+-- homomorphism
+-- structure-preserving map b/tw 2 algeabraic structures
+-- applying fn in some struct to value in some struct is same as applying
+-- a fn to value w/out affecting outside struct
+pure f <*> pure x = pure (f x)
+
+-- interchange
+-- u is fn in some struct
+u <*> pure y = pure ($ y) <*> u
 ```
 
