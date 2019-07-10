@@ -103,3 +103,16 @@ pure f <*> pure x = pure (f x)
 u <*> pure y = pure ($ y) <*> u
 ```
 
+## monads
+
+- applicative functors plus extra stuff!
+
+```haskell
+class Applicative m => Monad m where
+  -- bind
+  (>>=) :: m a -> (a -> m b) -> m b
+  -- sequencing operator
+  (>>) :: m a -> m b -> m b
+  -- pure
+  return :: a -> m a
+```
