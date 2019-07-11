@@ -106,6 +106,8 @@ u <*> pure y = pure ($ y) <*> u
 ## monads
 
 - applicative functors plus extra stuff!
+- benefit is the `join`, or the `concat` generalization, in `bind`
+- `bind` is `join` plus `mapping`
 
 ```haskell
 class Applicative m => Monad m where
@@ -115,4 +117,8 @@ class Applicative m => Monad m where
   (>>) :: m a -> m b -> m b
   -- pure
   return :: a -> m a
+
+join :: Monad m => m (m a) -> m a
+-- compare to
+concat :: [[a]] -> [a]
 ```
