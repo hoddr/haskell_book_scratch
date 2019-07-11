@@ -121,4 +121,14 @@ class Applicative m => Monad m where
 join :: Monad m => m (m a) -> m a
 -- compare to
 concat :: [[a]] -> [a]
+
+-- laws
+-- right identity
+m >>= return = m
+
+-- left identity
+return x >>= f = f x
+
+-- associativity
+(m >>= f) >>= g = m >>= (\x -> f x >>= g)
 ```
