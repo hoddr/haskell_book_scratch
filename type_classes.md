@@ -132,3 +132,91 @@ return x >>= f = f x
 -- associativity
 (m >>= f) >>= g = m >>= (\x -> f x >>= g)
 ```
+
+## foldables
+
+```haskell
+data Identity a = Identity a
+
+instance Foldable Identity where
+  foldr f z (Identity x) = f x z
+  foldl f z (Identity x) = f z x
+  foldMap f (Identity x) = f x
+
+instance Foldable Optional where
+  foldr _ z Nada = z
+  foldr f z (Yep x) = f x z
+
+  foldl _ z Nada = z
+  foldl f z (Yep x) = f z x
+
+  foldMap _ Nada = mempty
+  foldMap f (Yep a) = f a
+```
+
+## traversables
+
+```haskell
+class (Functor t, Foldable t) => Traversable t where
+  traverse :: Applicative f => (a -> f b) -> t a -> f (t b)
+  traverse f = sequenceA . fmap f
+
+  sequenceA :: Applicative f => t (f a) -> f (t a)
+  sequenceA = travaerse id
+
+-- sequenceA
+-- traverse
+
+data Either a b = Left a | Right b deriving (Eq, Ord, Show)
+
+instance Functor (Either a) where
+  fmap _ (Left x) = Left x
+  fmap f (Right y) = Right (f y)
+
+instance Applicative (Either e) where
+  pure = Right
+  Left e <*> _ = Left e
+  Right f <*> r = fmap f r
+
+instance Foldable (Either a) where
+  foldMap _ (Left _) = mempty
+  foldMap f (Right y) = f y
+
+  foldr _ z (Left _) = z
+  foldr f z (Right y) = f y z
+
+instance Traversable (Either a) where
+  traverse _ (Left x) = pure (Left x)
+  traverse f (Right y) = Right <$> f y
+
+-- for tuple
+instance Functor ((,) a) where
+  fmap f (x, y) = (x, f y)
+
+-- traversable laws
+--1. naturality
+-- t . traverse f = traverse (t . f)
+--2. identity
+-- traverse Identity = Identity
+--3. composition
+-- traverse (Compose . fmap g . f) = Compose . fmap (traverse g) . traverse f
+
+-- sequenceA laws
+--1. naturality
+-- t . sequenceA = sequenceA . fmap t
+--2. identity
+-- sequenceA . fmap Identity = Identity
+--3. composition
+-- sequenceA . fmap Compose = Compose . fmap sequenceA . sequenceA
+```
+
+## reader
+
+- way of abstracting out function application and gives method
+of doing computation in terms of arg that is not yet supplied
+- used most often when a constant value obtained externally
+is needed as an argument to a bunch of functions
+  - avoids needed to explicitly pass the value around!
+
+```haskell
+```
