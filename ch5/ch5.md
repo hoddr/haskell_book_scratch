@@ -125,5 +125,100 @@ d = a c 200
 
 ### type var or specific type constructor? (pg 153)
 
+1. constrained, full, concrete, concrete
+2. full, concrete, concrete
+3. full, constrained, concrete
+4. full, full, concrete
+
+### write a type sig
+
 ```haskell
+--- 1 (like head)
+functionH :: [a] -> a
+functionH :: Foldable t => t a -> a
+
+--- 2
+functionC :: (Ord a) => a -> a -> Bool
+
+--- 3
+functionS :: (a, b) -> b
+```
+
+### given type, write fn
+
+```haskell
+--- 1
+i :: a -> a
+i = id
+
+--- 2
+c :: a -> b -> a
+c x _ = x
+
+--- 3
+c'' :: b -> a -> b
+c'' = c
+
+--- 4
+r :: [a] -> [a]
+r = tail
+r = reverse
+
+--- 5
+co :: (b -> c) -> (a -> b) -> a -> c
+co g f x = g $ f a
+
+--- 6
+a :: (a -> c) -> a -> a
+a _ x = x
+
+--- 7
+a' :: (a -> b) -> a -> b
+--- (->)
+a' f x = f x
+```
+
+### fix it
+
+```haskell
+module Sing where
+
+fstString :: [Char] -> [Char]
+fstString x = x ++ " in the rain"
+
+sndString :: [Char] -> [Char]
+sndString x = x ++ " over the rainbow"
+
+sing = if (x > y)
+         then fstString x
+         else sndString y
+       where x = "Singin"
+             y = "Somewhere"
+
+--- 3
+module Arith3Broken where
+
+main :: IO()
+main = do
+  print $ 1 + 2
+  putStrLn 10
+  print $ negate (-1)
+  print $ (+) 0 (negate 1)
+```
+
+### type-kwon-do
+
+```haskell
+--- 1
+h :: Int -> Char
+h = g . f
+
+--- 2
+e = w . q
+
+--- 3
+xform (a, b) = (xz a, yz b)
+
+--- 4
+munge f g x = fst $ g $ f x
 ```
