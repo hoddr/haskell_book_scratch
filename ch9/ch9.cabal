@@ -16,9 +16,10 @@ maintainer:          hoddr@outlook.com
 extra-source-files:  CHANGELOG.md
 
 executable ch9
-  main-is:             ch8.hs
+  main-is:             ch9.hs
   -- other-modules:
   -- other-extensions:
   build-depends:       base ^>=4.12.0.0
   -- hs-source-dirs:
   default-language:    Haskell2010
+  ghc-options: -Wall
