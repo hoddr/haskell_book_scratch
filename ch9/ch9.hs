@@ -24,3 +24,10 @@ eftChar :: Char -> Char -> [Char]
 eftChar c1 c2 = if c1 <= c2
                    then enumFromTo c1 c2
                    else enumFromTo c2 c1
+
+-- thy fearful symmetry
+-- 1 use takeWhile and dropWhile, fn that takes string
+-- and returns list of strings, using spaces to sep elems
+-- of string into words
+myWords :: String -> [String]
+myWords = undefined
