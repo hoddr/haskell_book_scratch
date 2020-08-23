@@ -143,7 +143,7 @@ myMinimumBy comp (x:xs) = myInner x xs
 
 -- 10 myMaximum and myMinimum
 myMaximum :: (Ord a) => [a] -> a
-myMaximum = undefined
+myMaximum = myMaximumBy compare
 
 myMinimum :: (Ord a) => [a] -> a
-myMinimum = undefined
+myMinimum = myMinimumBy compare
