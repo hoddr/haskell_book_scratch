@@ -20,5 +20,6 @@ executable ch10
   -- other-modules:
   -- other-extensions:
   build-depends:       base ^>=4.12.0.0
+                     , time
   -- hs-source-dirs:
   default-language:    Haskell2010
